@@ -44,42 +44,46 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyBV4wgAv_eaOQHOzRJO6NNMziudCAvFmOM',
-    appId: '1:799694197291:web:0978aa6be7d7bc4122506e',
-    messagingSenderId: '799694197291',
-    projectId: 'admin-e-learning-a7fdd',
-    authDomain: 'admin-e-learning-a7fdd.firebaseapp.com',
-    databaseURL: 'https://admin-e-learning-a7fdd-default-rtdb.asia-southeast1.firebasedatabase.app',
-    storageBucket: 'admin-e-learning-a7fdd.appspot.com',
-    measurementId: 'G-KETMQHZFNZ',
+    apiKey: 'AIzaSyDqjH21-BxXIlAQ8WVAvu566_KHgWWyA2Q',
+    appId: '1:1069484521712:web:935a89d4b66b6951256a35',
+    messagingSenderId: '1069484521712',
+    projectId: 'codexia-e-learning',
+    authDomain: 'codexia-e-learning.firebaseapp.com',
+    databaseURL: 'https://codexia-e-learning-default-rtdb.asia-southeast1.firebasedatabase.app',
+    storageBucket: 'codexia-e-learning.appspot.com',
+    measurementId: 'G-VTNKYXTG4F',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCfN2mLeA5rFehzotzOVBTTE-xf2MOExu0',
-    appId: '1:799694197291:android:46f4b41d8ce9ddb122506e',
-    messagingSenderId: '799694197291',
-    projectId: 'admin-e-learning-a7fdd',
-    databaseURL: 'https://admin-e-learning-a7fdd-default-rtdb.asia-southeast1.firebasedatabase.app',
-    storageBucket: 'admin-e-learning-a7fdd.appspot.com',
+    apiKey: 'AIzaSyBf_I4uDhwwiZfJRX2fs_HuQGoAqlRiRnQ',
+    appId: '1:1069484521712:android:2daf1201e2cf9262256a35',
+    messagingSenderId: '1069484521712',
+    projectId: 'codexia-e-learning',
+    databaseURL: 'https://codexia-e-learning-default-rtdb.asia-southeast1.firebasedatabase.app',
+    storageBucket: 'codexia-e-learning.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDAdJVcoCloSumlTQViXhgh_vfoqsSq7I8',
-    appId: '1:799694197291:ios:0d3bbeabd190425c22506e',
-    messagingSenderId: '799694197291',
-    projectId: 'admin-e-learning-a7fdd',
-    databaseURL: 'https://admin-e-learning-a7fdd-default-rtdb.asia-southeast1.firebasedatabase.app',
-    storageBucket: 'admin-e-learning-a7fdd.appspot.com',
+    apiKey: 'AIzaSyDTH4JHdewrjr9P1VNgsQtUJ3M8m23uwAQ',
+    appId: '1:1069484521712:ios:5e52e08f44c77943256a35',
+    messagingSenderId: '1069484521712',
+    projectId: 'codexia-e-learning',
+    databaseURL: 'https://codexia-e-learning-default-rtdb.asia-southeast1.firebasedatabase.app',
+    storageBucket: 'codexia-e-learning.appspot.com',
+    androidClientId: '1069484521712-0d8ivk310cfmcqhifri7m6cvolacmbcm.apps.googleusercontent.com',
+    iosClientId: '1069484521712-q37rfqqpqilqn1t3q5dtui90l1kuie1p.apps.googleusercontent.com',
     iosBundleId: 'com.codexia.codexiaELearning',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyDAdJVcoCloSumlTQViXhgh_vfoqsSq7I8',
-    appId: '1:799694197291:ios:ec06fa190c64fbd222506e',
-    messagingSenderId: '799694197291',
-    projectId: 'admin-e-learning-a7fdd',
-    databaseURL: 'https://admin-e-learning-a7fdd-default-rtdb.asia-southeast1.firebasedatabase.app',
-    storageBucket: 'admin-e-learning-a7fdd.appspot.com',
+    apiKey: 'AIzaSyDTH4JHdewrjr9P1VNgsQtUJ3M8m23uwAQ',
+    appId: '1:1069484521712:ios:143856f47d99c925256a35',
+    messagingSenderId: '1069484521712',
+    projectId: 'codexia-e-learning',
+    databaseURL: 'https://codexia-e-learning-default-rtdb.asia-southeast1.firebasedatabase.app',
+    storageBucket: 'codexia-e-learning.appspot.com',
+    androidClientId: '1069484521712-0d8ivk310cfmcqhifri7m6cvolacmbcm.apps.googleusercontent.com',
+    iosClientId: '1069484521712-0jnk8dp5s8q6d20k21f6gsmdpoqtrdq4.apps.googleusercontent.com',
     iosBundleId: 'com.codexia.codexiaELearning.RunnerTests',
   );
 }
