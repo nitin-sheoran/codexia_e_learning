@@ -1,8 +1,8 @@
 import 'package:codexia_e_learning/course/service/course_service.dart';
 import 'package:codexia_e_learning/course/ui/show_course_screen.dart';
-import 'package:codexia_e_learning/login/ui/home_screen.dart';
 import 'package:codexia_e_learning/login/ui/phone_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pinput.dart';
 
@@ -124,7 +124,9 @@ class _OtpScreenState extends State<OtpScreen> {
                         }));
                       }
                     } catch (e) {
-                      print('Error $e');
+                      if (kDebugMode) {
+                        print('Error $e');
+                      }
                     }
                   },
                   style: ElevatedButton.styleFrom(

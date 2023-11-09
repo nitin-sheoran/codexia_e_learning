@@ -1,7 +1,6 @@
 import 'package:codexia_e_learning/course/service/course_service.dart';
 import 'package:codexia_e_learning/course/ui/show_course_screen.dart';
 import 'package:codexia_e_learning/login/service/auth_firebase_services.dart';
-import 'package:codexia_e_learning/login/ui/home_screen.dart';
 import 'package:codexia_e_learning/login/ui/phone_screen.dart';
 import 'package:codexia_e_learning/shared/colors_const.dart';
 import 'package:flutter/material.dart';
