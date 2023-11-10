@@ -1,10 +1,10 @@
+import 'package:flutter/material.dart';
 import 'package:codexia_e_learning/chapter/model/chapter_model.dart';
 import 'package:codexia_e_learning/chapter/service/chapter_service.dart';
 import 'package:codexia_e_learning/chapter/ui/content_detail_screen.dart';
 import 'package:codexia_e_learning/course/model/course_model.dart';
 import 'package:codexia_e_learning/shared/colors_const.dart';
 import 'package:codexia_e_learning/shared/string_const.dart';
-import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 
 class ShowChapterScreen extends StatefulWidget {
@@ -79,7 +79,7 @@ class _ShowChapterScreenState extends State<ShowChapterScreen> {
                     chapterName: value[StringConst.chapterName] ?? '',
                     content: value[StringConst.content] ?? '',
                   );
-                  chapterList.add(chapter);/// auth fe imp
+                  chapterList.add(chapter);
                 },
               );
             }
