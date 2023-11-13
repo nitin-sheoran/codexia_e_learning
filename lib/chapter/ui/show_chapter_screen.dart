@@ -69,7 +69,7 @@ class _ShowChapterScreenState extends State<ShowChapterScreen> {
             List<Chapter> chapterList = [];
             DataSnapshot dataSnapshot = snapshot.data!.snapshot;
             if (dataSnapshot.exists) {
-              final map = dataSnapshot.value as Map<String, dynamic>;
+              final map = dataSnapshot.value as Map<dynamic, dynamic>;
 
               map.forEach(
                 (key, value) {
