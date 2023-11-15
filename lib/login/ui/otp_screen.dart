@@ -1,4 +1,3 @@
-import 'package:codexia_e_learning/course/service/course_service.dart';
 import 'package:codexia_e_learning/course/ui/show_course_screen.dart';
 import 'package:codexia_e_learning/login/ui/phone_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -31,17 +30,6 @@ class _OtpScreenState extends State<OtpScreen> {
         borderRadius: BorderRadius.circular(20),
       ),
     );
-
-    // final focusedPinTheme = defaultPinTheme.copyDecorationWith(
-    //   border: Border.all(color: const Color.fromRGBO(114, 178, 238, 1)),
-    //   borderRadius: BorderRadius.circular(8),
-    // );
-    //
-    // final submittedPinTheme = defaultPinTheme.copyWith(
-    //   decoration: defaultPinTheme.decoration?.copyWith(
-    //     color: const Color.fromRGBO(234, 239, 243, 1),
-    //   ),
-    // );
     var code = '';
     return Scaffold(
       appBar: AppBar(
@@ -119,8 +107,7 @@ class _OtpScreenState extends State<OtpScreen> {
                       if (mounted) {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
-                          return ShowCourseScreen(
-                              courseService: CourseService());
+                          return const ShowCourseScreen();
                         }));
                       }
                     } catch (e) {
