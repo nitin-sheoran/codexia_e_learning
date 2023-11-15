@@ -1,4 +1,3 @@
-import 'package:codexia_e_learning/course/service/course_service.dart';
 import 'package:codexia_e_learning/course/ui/show_course_screen.dart';
 import 'package:codexia_e_learning/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +11,7 @@ class NavigationBarScreen extends StatefulWidget {
 
 class _NavigationBarScreenState extends State<NavigationBarScreen> {
   List<Widget> screenList=[
-    ShowCourseScreen(courseService: CourseService()),
+    const ShowCourseScreen(),
     const ProfileScreen(),
   ];
   int currentIndex = 0;
