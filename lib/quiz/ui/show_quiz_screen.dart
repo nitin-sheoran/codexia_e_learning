@@ -51,7 +51,7 @@ class _ShowQuizScreenState extends State<ShowQuizScreen> {
       ),
       body: Consumer<QuizProvider>(builder: (create, provider, widgets) {
         return StreamBuilder(
-          stream: quizProvider.quizService.getQuestionStream(widget.chapterId),
+          stream: quizProvider.getQuestionStream(widget.chapterId),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());

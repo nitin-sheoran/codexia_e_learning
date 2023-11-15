@@ -37,7 +37,7 @@ class _ShowCourseScreenState extends State<ShowCourseScreen> {
       ),
         body: Consumer<CourseProvider>(builder: (create, provider, widget){
         return StreamBuilder(
-          stream: courseProvider.courseService.getCourseStream(),
+          stream: courseProvider.listenCourse(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());

@@ -66,7 +66,7 @@ class _ShowChapterScreenState extends State<ShowChapterScreen> {
       ),
       body: Consumer<ChapterProvider>(builder: (create, provider, widgets) {
           return StreamBuilder(
-            stream: chapterProvider.chapterService.getChapterStream(widget.courseId),
+            stream: chapterProvider.getChapterStream(widget.courseId),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(child: CircularProgressIndicator());
