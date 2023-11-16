@@ -1,6 +1,6 @@
+import 'package:codexia_e_learning/course/ui/show_course_screen.dart';
 import 'package:codexia_e_learning/login/service/auth_firebase_services.dart';
 import 'package:codexia_e_learning/login/ui/phone_screen.dart';
-import 'package:codexia_e_learning/screens/navigation_bar_screen.dart';
 import 'package:codexia_e_learning/shared/colors_const.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -45,7 +45,7 @@ class _AuthLoginScreenState extends State<AuthLoginScreen> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const NavigationBarScreen()));
+                              builder: (context) => const ShowCourseScreen()));
                     }
                   },
                   style: ButtonStyle(
