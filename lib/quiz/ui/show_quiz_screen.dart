@@ -1,17 +1,16 @@
 import 'package:codexia_e_learning/quiz/model/quiz_model.dart';
-import 'package:codexia_e_learning/quiz/service/quiz_service.dart';
+import 'package:codexia_e_learning/quiz/provider/quiz_provider.dart';
 import 'package:codexia_e_learning/shared/colors_const.dart';
 import 'package:codexia_e_learning/shared/string_const.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
+import 'package:provider/provider.dart';
 
 class ShowQuizScreen extends StatefulWidget {
-  final QuizService quizService;
   final String chapterId;
 
   const ShowQuizScreen({
     required this.chapterId,
-    required this.quizService,
     super.key,
   });
 
@@ -20,7 +19,14 @@ class ShowQuizScreen extends StatefulWidget {
 }
 
 class _ShowQuizScreenState extends State<ShowQuizScreen> {
+  late QuizProvider quizProvider;
   List<String> selectedOption = [];
+
+  @override
+  void initState() {
+    quizProvider = Provider.of<QuizProvider>(context, listen: false);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,81 +49,84 @@ class _ShowQuizScreenState extends State<ShowQuizScreen> {
         ),
         backgroundColor: ColorsConst.blueColor,
       ),
-      body: StreamBuilder(
-        stream: widget.quizService.getQuestionStream(widget.chapterId),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          } else {
-            List<Quiz> quizList = [];
-            DataSnapshot dataSnapshot = snapshot.data!.snapshot;
-            if (dataSnapshot.exists) {
-              final map = dataSnapshot.value as Map<dynamic, dynamic>;
+      body: Consumer<QuizProvider>(builder: (create, provider, widgets) {
+        return StreamBuilder(
+          stream: quizProvider.getQuestionStream(widget.chapterId),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return Center(child: Text('Error: ${snapshot.error}'));
+            } else {
+              List<Quiz> quizList = [];
+              DataSnapshot dataSnapshot = snapshot.data!.snapshot;
+              if (dataSnapshot.exists) {
+                final map = dataSnapshot.value as Map<dynamic, dynamic>;
 
-              map.forEach((key, value) {
-                Quiz quiz = fromMap(value);
-                quizList.add(quiz);
-              });
-            }
-            return ListView.builder(
-              itemCount: quizList.length,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.only(left: 20, right: 20,top: 10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                          Text(
-                            'Que.  ${quizList[index].question}',
-                            style: const TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
-                          ),
-                      RadioListTile<String>(
-                        title: Text(quizList[index].optionA),
-                        value: 'A',
-                        groupValue: quizList[index].correctOption,
-                        onChanged: (value) {},
-                      ),
-                      RadioListTile<String>(
-                        title: Text(quizList[index].optionB),
-                        value: 'B',
-                        groupValue: quizList[index].correctOption,
-                        onChanged: (value) {},
-                      ),
-                      RadioListTile<String>(
-                        title: Text(quizList[index].optionC),
-                        value: 'C',
-                        groupValue: quizList[index].correctOption,
-                        onChanged: (value) {},
-                      ),
-                      RadioListTile<String>(
-                        title: Text(quizList[index].optionD),
-                        value: 'D',
-                        groupValue: quizList[index].correctOption,
-                        onChanged: (value) {},
-                      ),
-                      Text(
-                        'Correct Option:  ${quizList[index].correctOption}',
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
+                map.forEach((key, value) {
+                  Quiz quiz = fromMap(value);
+                  quizList.add(quiz);
+                });
+              }
+              return ListView.builder(
+                itemCount: quizList.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding:
+                        const EdgeInsets.only(left: 20, right: 20, top: 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Que.  ${quizList[index].question}',
+                          style: const TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold),
                         ),
-                      ),
-                    ],
-                  ),
-                );
-              },
-            );
-          }
-        },
-      ),
+                        RadioListTile<String>(
+                          title: Text(quizList[index].optionA),
+                          value: 'A',
+                          groupValue: quizList[index].correctOption,
+                          onChanged: (value) {},
+                        ),
+                        RadioListTile<String>(
+                          title: Text(quizList[index].optionB),
+                          value: 'B',
+                          groupValue: quizList[index].correctOption,
+                          onChanged: (value) {},
+                        ),
+                        RadioListTile<String>(
+                          title: Text(quizList[index].optionC),
+                          value: 'C',
+                          groupValue: quizList[index].correctOption,
+                          onChanged: (value) {},
+                        ),
+                        RadioListTile<String>(
+                          title: Text(quizList[index].optionD),
+                          value: 'D',
+                          groupValue: quizList[index].correctOption,
+                          onChanged: (value) {},
+                        ),
+                        Text(
+                          'Correct Option:  ${quizList[index].correctOption}',
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              );
+            }
+          },
+        );
+      }),
     );
   }
 
   Quiz fromMap(value) {
-      var quiz = Quiz(
+    var quiz = Quiz(
       chapterId: value[StringConst.chapterId] ?? '',
       questionId: value[StringConst.questionId] ?? '',
       optionA: value[StringConst.optionA] ?? '',

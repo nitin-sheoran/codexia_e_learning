@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 
 class ContentDetailScreen extends StatefulWidget {
   const ContentDetailScreen({required this.chapter, super.key});
-
   final Chapter chapter;
 
   @override
@@ -36,7 +35,6 @@ class _ContentDetailScreenState extends State<ContentDetailScreen> {
                   context,
                   MaterialPageRoute(
                     builder: (context) => ShowQuizScreen(
-                      quizService: QuizService(),
                       chapterId: widget.chapter.id!,
                     ),
                   ),

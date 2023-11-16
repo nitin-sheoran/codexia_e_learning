@@ -1,26 +1,36 @@
+import 'package:codexia_e_learning/login/service/auth_firebase_services.dart';
+import 'package:codexia_e_learning/login/ui/auth_login_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:codexia_e_learning/shared/app_const.dart';
 import 'package:codexia_e_learning/shared/colors_const.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:codexia_e_learning/course/model/course_model.dart';
-import 'package:codexia_e_learning/chapter/service/chapter_service.dart';
 import 'package:codexia_e_learning/chapter/ui/show_chapter_screen.dart';
-import 'package:codexia_e_learning/course/service/course_service.dart';
+import 'package:codexia_e_learning/course/provider/course_provider.dart';
 
 class ShowCourseScreen extends StatefulWidget {
-  final CourseService courseService;
-
-  const ShowCourseScreen({required this.courseService, super.key});
+  const ShowCourseScreen({super.key});
 
   @override
   _ShowCourseScreenState createState() => _ShowCourseScreenState();
 }
 
 class _ShowCourseScreenState extends State<ShowCourseScreen> {
+  late CourseProvider courseProvider;
+
+  @override
+  void initState() {
+    super.initState();
+    courseProvider = Provider.of<CourseProvider>(context, listen: false);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: const Text(
           AppConst.titleText2,
           style: TextStyle(
@@ -28,75 +38,113 @@ class _ShowCourseScreenState extends State<ShowCourseScreen> {
             fontSize: 26,
           ),
         ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 14),
+            child: GestureDetector(
+              onTap: () async {
+                await AuthFirebaseService().logOut();
+                if (mounted) {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const AuthLoginScreen()));
+                  Fluttertoast.showToast(msg: 'Account Logout');
+                }
+              },
+              child: Container(
+                margin: const EdgeInsets.only(right: 18),
+                height: 28,
+                width: 80,
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Colors.white,
+                    width: 2,
+                  ),
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: const Center(
+                  child: Text(
+                    'LogOut',
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
         backgroundColor: ColorsConst.blueColor,
       ),
-      body: StreamBuilder(
-        stream: widget.courseService.getCourseStream(),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          } else if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          } else {
-            List<Course> courseList = [];
-            DataSnapshot dataSnapshot = snapshot.data!.snapshot;
-            final map = dataSnapshot.value as Map<dynamic, dynamic>;
-            forEach(map, courseList);
+      body: Consumer<CourseProvider>(builder: (create, provider, widget) {
+        return StreamBuilder(
+          stream: courseProvider.listenCourse(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return Center(child: Text('Error: ${snapshot.error}'));
+            } else {
+              List<Course> courseList = [];
+              DataSnapshot dataSnapshot = snapshot.data!.snapshot;
+              final map = dataSnapshot.value as Map<dynamic, dynamic>;
+              forEach(map, courseList);
 
-            return Padding(
-              padding: const EdgeInsets.all(16),
-              child: GridView.builder(
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  mainAxisSpacing: 4,
-                  crossAxisSpacing: 4,
-                  mainAxisExtent: 200,
-                ),
-                itemCount: courseList.length,
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ShowChapterScreen(
-                            course: courseList[index],
-                            chapterService: ChapterService(),
-                            courseId: courseList[index].courseId!,
+              return Padding(
+                padding: const EdgeInsets.all(16),
+                child: GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 4,
+                    crossAxisSpacing: 4,
+                    mainAxisExtent: 200,
+                  ),
+                  itemCount: courseList.length,
+                  itemBuilder: (context, index) {
+                    return GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => ShowChapterScreen(
+                              course: courseList[index],
+                              courseId: courseList[index].courseId!,
+                            ),
                           ),
+                        );
+                      },
+                      child: Card(
+                        surfaceTintColor: ColorsConst.whiteColor,
+                        color: ColorsConst.whiteColor,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            if (courseList[index].imgUrl.isNotEmpty)
+                              Image.network(
+                                courseList[index].imgUrl,
+                                height: 100,
+                                width: 100,
+                                fit: BoxFit.cover,
+                              ),
+                            Text(
+                              courseList[index].courseName,
+                              style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
                         ),
-                      );
-                    },
-                    child: Card(
-                      surfaceTintColor: ColorsConst.whiteColor,
-                      color: ColorsConst.whiteColor,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          if (courseList[index].imgUrl.isNotEmpty)
-                            Image.network(
-                              courseList[index].imgUrl,
-                              height: 100,
-                              width: 100,
-                              fit: BoxFit.cover,
-                            ),
-                          Text(
-                            courseList[index].courseName,
-                            style: const TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
                       ),
-                    ),
-                  );
-                },
-              ),
-            );
-          }
-        },
-      ),
+                    );
+                  },
+                ),
+              );
+            }
+          },
+        );
+      }),
     );
   }
 

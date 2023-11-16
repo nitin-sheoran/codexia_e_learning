@@ -1,9 +1,9 @@
-import 'package:codexia_e_learning/course/service/course_service.dart';
 import 'package:codexia_e_learning/course/ui/show_course_screen.dart';
 import 'package:codexia_e_learning/login/service/auth_firebase_services.dart';
 import 'package:codexia_e_learning/login/ui/phone_screen.dart';
 import 'package:codexia_e_learning/shared/colors_const.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class AuthLoginScreen extends StatefulWidget {
   const AuthLoginScreen({super.key});
@@ -17,7 +17,7 @@ class _AuthLoginScreenState extends State<AuthLoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration:  const BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
               ColorsConst.pinkColor,
@@ -37,11 +37,15 @@ class _AuthLoginScreenState extends State<AuthLoginScreen> {
                 child: ElevatedButton(
                   onPressed: () async {
                     await AuthFirebaseService().signInWithGmail();
+                    Fluttertoast.showToast(
+                      msg: 'Account Created successfully',
+                      backgroundColor: ColorsConst.greenColor,
+                    );
                     if (mounted) {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) =>  ShowCourseScreen(courseService: CourseService(),)));
+                              builder: (context) => const ShowCourseScreen()));
                     }
                   },
                   style: ButtonStyle(
@@ -126,7 +130,7 @@ class _AuthLoginScreenState extends State<AuthLoginScreen> {
                     ),
                   ),
                 ),
-              )
+              ),
             ],
           ),
         ),
