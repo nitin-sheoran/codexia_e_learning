@@ -1,4 +1,7 @@
+import 'package:codexia_e_learning/login/service/auth_firebase_services.dart';
+import 'package:codexia_e_learning/login/ui/auth_login_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:codexia_e_learning/shared/app_const.dart';
@@ -6,6 +9,7 @@ import 'package:codexia_e_learning/shared/colors_const.dart';
 import 'package:codexia_e_learning/course/model/course_model.dart';
 import 'package:codexia_e_learning/chapter/ui/show_chapter_screen.dart';
 import 'package:codexia_e_learning/course/provider/course_provider.dart';
+
 class ShowCourseScreen extends StatefulWidget {
   const ShowCourseScreen({super.key});
 
@@ -15,10 +19,11 @@ class ShowCourseScreen extends StatefulWidget {
 
 class _ShowCourseScreenState extends State<ShowCourseScreen> {
   late CourseProvider courseProvider;
+
   @override
   void initState() {
     super.initState();
-     courseProvider = Provider.of<CourseProvider>(context, listen: false);
+    courseProvider = Provider.of<CourseProvider>(context, listen: false);
   }
 
   @override
@@ -33,9 +38,46 @@ class _ShowCourseScreenState extends State<ShowCourseScreen> {
             fontSize: 26,
           ),
         ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 14),
+            child: GestureDetector(
+              onTap: () async {
+                await AuthFirebaseService().logOut();
+                if (mounted) {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const AuthLoginScreen()));
+                  Fluttertoast.showToast(msg: 'Account Logout');
+                }
+              },
+              child: Container(
+                margin: const EdgeInsets.only(right: 18),
+                height: 28,
+                width: 80,
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Colors.white,
+                    width: 2,
+                  ),
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: const Center(
+                  child: Text(
+                    'LogOut',
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
         backgroundColor: ColorsConst.blueColor,
       ),
-        body: Consumer<CourseProvider>(builder: (create, provider, widget){
+      body: Consumer<CourseProvider>(builder: (create, provider, widget) {
         return StreamBuilder(
           stream: courseProvider.listenCourse(),
           builder: (context, snapshot) {
