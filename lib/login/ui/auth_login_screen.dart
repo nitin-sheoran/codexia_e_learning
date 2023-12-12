@@ -3,7 +3,6 @@ import 'package:codexia_e_learning/login/service/auth_firebase_services.dart';
 import 'package:codexia_e_learning/login/ui/phone_screen.dart';
 import 'package:codexia_e_learning/shared/colors_const.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class AuthLoginScreen extends StatefulWidget {
   const AuthLoginScreen({super.key});
@@ -37,10 +36,6 @@ class _AuthLoginScreenState extends State<AuthLoginScreen> {
                 child: ElevatedButton(
                   onPressed: () async {
                     await AuthFirebaseService().signInWithGmail();
-                    Fluttertoast.showToast(
-                      msg: 'Account Created successfully',
-                      backgroundColor: ColorsConst.greenColor,
-                    );
                     if (mounted) {
                       Navigator.push(
                           context,
