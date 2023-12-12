@@ -18,7 +18,6 @@ Future<void> main() async {
     name: 'Codexia Academy',
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
   const fatalError = true;
   FlutterError.onError = (errorDetails) {
     if (fatalError) {
